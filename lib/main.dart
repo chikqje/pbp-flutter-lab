@@ -1,7 +1,6 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
-
+import 'package:counter_7/form.dart';
+import 'package:counter_7/data.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -9,41 +8,33 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  // Widget ini adalah root dari aplikasi Anda.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Program Counter',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
+        // Ini adalah theme dari aplikasi Anda.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
+  const MyHomePage({super.key});
 
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+  // Widget ini adalah halaman beranda aplikasi Anda. It is stateful, meaning
+  // artinya memiliki a State object (didefinisikan di bawah)  yang berisi fields 
+  // yang memengaruhi tampilannya.
 
-  final String title;
+  // Class ini adalah konfigurasi untuk state. Ini menyimpan values (nilai) (in this
+  // case the title) yang diberikan oleh parent (dalam hal ini App widget) dan 
+  // digunakan oleh build method of the State. Fields dalam Widget subclass
+  // selalu ditandai "final".
+
+  final String title = 'Flutter Tugas Home Page';
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -51,83 +42,110 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  String _condition = "Genap";
+  MaterialColor _color = Colors.red;
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
+    _changeCondition();
   }
-
-
 
   void _decrementCounter() {
+    // If the counter is zero, do nothing.
+    if (_counter == 0) {
+      return;
+    }
+    // Else, decrement the counter
     setState(() {
-        if (_counter > 0)
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter--;
     });
+    _changeCondition();
   }
 
+  void _changeCondition() {
+    // Jika nomor saat ini Genap/0, mengubah teks menjadi "Genap" dan juga warnanya
+    // menjadi biru. Jika Ganjil, mengubah teks menjadi "Ganjil" dan warnanya menjadi merah.
+    setState(() {
+      if (_counter % 2 == 0 || _counter == 0) {
+        _condition = "Genap";
+        _color = Colors.red;
+      }
+      else {
+        _condition = "Ganjil";
+        _color = Colors.blue;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
+    // Method ini dijalankan ulang setiap kali setState dipanggil, misalnya seperti 
+    // yang dilakukan oleh method _incrementCounter di atas.
     //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    // Flutter framework telah dioptimalkan untuk membuat build method dijalankan 
+    // ulang menjadi cepat, sehingga Anda bisa membangun ulang apa saja yang perlu 
+    // diperbarui daripada harus mengubah instance widget satu per satu.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
+        // Di sini kita mengambil nilai/value dari object MyHomePage yang dibuat 
+        // dengan App.build method, dan menggunakannya untuk ngeset judul appbar kita.
         title: Text(widget.title),
       ),
+      // Drawer menu
+        drawer: Drawer(
+            child: Column(
+              children: [
+                // Menambahkan clickable menu
+                ListTile(
+                  title: const Text('counter_7'),
+                  onTap: () {
+                    // Route menu ke halaman utama
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const MyHomePage()),
+                    );
+                  },
+                ),
+                ListTile(
+                  title: const Text('Tambah Budget'),
+                  onTap: () {
+                    // Route menu ke halaman form
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const MyFormPage()),
+                    );
+                  },
+                ),
+                ListTile(
+                  title: const Text('Data Budget'),
+                  onTap: () {
+                    // Route menu ke halaman form
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const MyDataPage()),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+        // Center adalah layout widget. Dibutuhkan single child dan positions
+        // di tengah dari the parentnya.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
+          // Column juga merupakan layout widget. Itu mengambil a list dari children dan
+          // menyusunnya secara vertikal. By default,ukurannya disesuaikan dengan 
+          // children secara horizontal, dan mencoba untuk as tall as its parent.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            if (_counter % 2 == 0)
-              const Text(
-                'Genap',
-                style : TextStyle(
-                  color: Colors.red,
-                ),
-              )
-
-            else if (_counter % 2 == 1)
-              const Text(
-               'Ganjil',
-                style : TextStyle(
-                 color: Colors.blue,
-                ),
+            Text(
+              _condition,
+              style: TextStyle(
+                color: _color,
               ),
-
+            ),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
@@ -135,30 +153,28 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-
-
-      
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(left: 30),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked, 
+      floatingActionButton: Container(
+        padding: const EdgeInsets.all(15),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            FloatingActionButton(
-              onPressed: _decrementCounter,
-              tooltip: 'Decrement',
-              child: const Icon(Icons.remove),
-            ), // This trailing comma makes auto-formatting nicer for build methods.
-            Expanded(child: Container()),
+            Visibility(
+              visible: (_counter > 0),
+              child: FloatingActionButton(
+                  onPressed: _decrementCounter,
+                  tooltip: 'Decrement',
+                  child: const Icon(Icons.remove),
+              ),
+            ),
             FloatingActionButton(
               onPressed: _incrementCounter,
               tooltip: 'Increment',
               child: const Icon(Icons.add),
             ), // This trailing comma makes auto-formatting nicer for build methods.
-          ]
-        )
-
-      )
-
+          ],
+        ),
+      ),
     );
   }
 }
