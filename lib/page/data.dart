@@ -1,5 +1,5 @@
 import 'package:counter_7/main.dart';
-import 'package:counter_7/form.dart';
+import 'package:counter_7/page/form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -47,7 +47,17 @@ class _MyDataPageState extends State<MyDataPage> {
                     ListTile(
                       title: const Text('Data Budget'),
                       onTap: () {
-                        // Route menu ke halaman form
+                        // Route menu ke halaman data budget
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => const MyDataPage()),
+                        );
+                      },
+                    ),
+                    ListTile(
+                      title: const Text('My Watchlist'),
+                      onTap: () {
+                        // Route menu ke halaman Watchlist
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(builder: (context) => const MyDataPage()),

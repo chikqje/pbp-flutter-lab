@@ -50,3 +50,51 @@ Navigator bekerja seperti sebuah stack di mana stack tersebut menyimpan data ber
 Membuat hamburger bar dengan menggunakan widget drawer yang setiap pilihannya akan tertuju pada page berbeda, yakni antara counter_7, tambah budget, dan data budget.
 Membuat file baru bernama form.dart untuk meminta input user melalui form menggunakan TextFormField dan DropdownButtonFormField. Menginisiasikan variabel sebagai elemen input yang bertipekan data string dan membuat list untuk menyimpan data hasil dar input user. Lalu membuat button untuk menyimpan input user dan memberikan pop-up message.
 Membuat file baru bernama data.dart yang berfungsi untuk menampilkan list data input dari user.
+
+
+### README TUGAS 9
+
+# 1. Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?
+
+Kita bisa melakukan pengambilan JSON tersebut dan dikirimkan dalam bentuk HTTP response berupa raw data. Namun, bila kita mengambil data tersebut tanpa melalui models, hal ini akan membuat developer jadi kesulitan untuk mengakses dan melihat data tersebut. Dengan adanya bantuan models, hal ini akan membuat developer menjadi lebih mudah untuk melakukan operasi pada data tersebut yang telah diubah menjadi dart object.
+
+
+
+
+
+# 2. Sebutkan widget apa saja yang kamu pakai di proyek kali ini dan jelaskan fungsinya.
+
+Stack: Memposisikan children relatif terhadap tepi-tepi kotak.
+Center: Menengahkan posisi children dalam tampilan
+Text: Menampilkan tulisan dengan satu style
+TextSpan: Menampilkan teks immutable secara merentang
+SizedBox: Menampilkan sebuah box dengan ukuran tertentu
+RichText: Menampilkan berbagai teks yang menggunakan berbagai style berbeda.
+Container: Penampung berbagai widget untuk menerapkan posisi, ukuran, dan property lainnya secara seragam
+FutureBuilder: Widget yang membangun tampilan dirinya sendiri. Berguna untuk menampilkan berbagai widget yang sama dengan data yang berbeda.
+Column: Menampilkan susunan isi widget / children secara vertikal
+Row: Menampilkan susunan children secara horizontal
+MainAxisAlignment: Menempatkan children sepanjang sumbu utama dalam sebuah layout flex
+EdgeInsets: Memberikan Offset pada 4 arah kardinal yang bersifat immutable
+
+
+
+# 3. Jelaskan mekanisme pengambilan data dari json hingga dapat ditampilkan pada Flutter.
+
+
+* Serialisasikan JSON menggunakan code generation
+* Ambil atau buat data JSON dari suatu network
+* Serialisasikan data JSON, simpan data kedalam suatu query atau list
+* Tampilkan data beserta atribut-atribut nya menggunakan sebuah Widget
+
+
+
+# 4. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas.
+
+
+1. Tambahkan dependensi HTTP pada proyek flutter agar dapat mengambil data dari internet
+2. Buat model serialisasi data JSON dari MyWatchlist
+3. Fetch data MyWatchlist secara asynchronous dari website heroku utk Tugas 3, kemudian serialisasi data tersebut
+4. Buat halaman yang menampilkan berbentuk list dari objek-objek watchlist menggunakan data yang telah diserialisasi
+5. Wrap setiap objek sebagai tombol dengan routing ke halaman detail watchlist
+6. Buat halaman detail watchlist yang menampilkan atribut-atribut dari suatu objek MyWatchlist
